@@ -1,19 +1,19 @@
 /**************************************************************************/
-/*! 
+/*!
     @file     Adafruit_PN532.h
     @author   Adafruit Industries
 	@license  BSD (see license.txt)
-	
+
 
 	This is a library for the Adafruit PN532 NFC/RFID breakout boards
-	This library works with the Adafruit NFC breakout 
+	This library works with the Adafruit NFC breakout
 	----> https://www.adafruit.com/products/364
-	
-	Check out the links above for our tutorials and wiring diagrams 
+
+	Check out the links above for our tutorials and wiring diagrams
   These chips use SPI or I2C to communicate.
-	
-	Adafruit invests time and resources providing this open source code, 
-	please support Adafruit and open-source hardware by purchasing 
+
+	Adafruit invests time and resources providing this open source code,
+	please support Adafruit and open-source hardware by purchasing
 	products from Adafruit!
 
 	@section  HISTORY
@@ -23,7 +23,7 @@
 	v1.1  - Added full command list
           - Added 'verbose' mode flag to constructor to toggle debug output
           - Changed readPassiveTargetID() to return variable length values
-	
+
 */
 /**************************************************************************/
 
@@ -159,29 +159,29 @@ class Adafruit_PN532{
   Adafruit_PN532(uint8_t irq, uint8_t reset);  // Hardware I2C
   Adafruit_PN532(uint8_t ss);  // Hardware SPI
   void begin(void);
-  
+
   // Generic PN532 functions
   bool     SAMConfig(void);
-  uint32_t getFirmwareVersion(void);
-  bool     sendCommandCheckAck(uint8_t *cmd, uint8_t cmdlen, uint16_t timeout = 1000);  
+  uint32_t getFirmwareVersion();
+  bool     sendCommandCheckAck(uint8_t *cmd, uint8_t cmdlen, uint16_t timeout = 1000);
   bool     writeGPIO(uint8_t pinstate);
   uint8_t  readGPIO(void);
   bool     setPassiveActivationRetries(uint8_t maxRetries);
-  
+
   // ISO14443A functions
   bool readPassiveTargetID(uint8_t cardbaudrate, uint8_t * uid, uint8_t * uidLength, uint16_t timeout = 0); //timeout 0 means no timeout - will block forever.
   bool inDataExchange(uint8_t * send, uint8_t sendLength, uint8_t * response, uint8_t * responseLength);
   bool inListPassiveTarget();
-  
+
   // Mifare Classic functions
   bool    mifareclassic_IsFirstBlock (uint32_t uiBlock);
   bool    mifareclassic_IsTrailerBlock (uint32_t uiBlock);
   uint8_t mifareclassic_AuthenticateBlock (uint8_t * uid, uint8_t uidLen, uint32_t blockNumber, uint8_t keyNumber, uint8_t * keyData);
   uint8_t mifareclassic_ReadDataBlock (uint8_t blockNumber, uint8_t * data);
-  uint8_t mifareclassic_WriteDataBlock (uint8_t blockNumber, uint8_t * data);
+  uint8_t mifareclassic_WriteDataBlock (uint8_t blockNumber, const uint8_t * data);
   uint8_t mifareclassic_FormatNDEF (void);
   uint8_t mifareclassic_WriteNDEFURI (uint8_t sectorNumber, uint8_t uriIdentifier, const char * url);
-  
+
   // Mifare Ultralight functions
   uint8_t mifareultralight_ReadPage (uint8_t page, uint8_t * buffer);
   uint8_t mifareultralight_WritePage (uint8_t page, uint8_t * data);
@@ -190,7 +190,7 @@ class Adafruit_PN532{
   uint8_t ntag2xx_ReadPage (uint8_t page, uint8_t * buffer);
   uint8_t ntag2xx_WritePage (uint8_t page, uint8_t * data);
   uint8_t ntag2xx_WriteNDEFURI (uint8_t uriIdentifier, char * url, uint8_t dataLen);
-  
+
   // Help functions to display formatted text
   static void PrintHex(const byte * data, const uint32_t numBytes);
   static void PrintHexChar(const byte * pbtData, const uint32_t numBytes);

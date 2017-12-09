@@ -299,7 +299,7 @@ void Adafruit_PN532::PrintHexChar(const byte * data, const uint32_t numBytes)
     @returns  The chip's firmware version and ID
 */
 /**************************************************************************/
-uint32_t Adafruit_PN532::getFirmwareVersion(void) {
+uint32_t Adafruit_PN532::getFirmwareVersion() {
   uint32_t response;
 
   pn532_packetbuffer[0] = PN532_COMMAND_GETFIRMWAREVERSION;
@@ -960,7 +960,7 @@ uint8_t Adafruit_PN532::mifareclassic_ReadDataBlock (uint8_t blockNumber, uint8_
     @returns 1 if everything executed properly, 0 for an error
 */
 /**************************************************************************/
-uint8_t Adafruit_PN532::mifareclassic_WriteDataBlock (uint8_t blockNumber, uint8_t * data)
+uint8_t Adafruit_PN532::mifareclassic_WriteDataBlock (uint8_t blockNumber, const uint8_t * data)
 {
   #ifdef MIFAREDEBUG
     PN532DEBUGPRINT.print(F("Trying to write 16 bytes to block "));PN532DEBUGPRINT.println(blockNumber);
@@ -1547,7 +1547,9 @@ bool Adafruit_PN532::waitready(uint16_t timeout) {
     if (timeout != 0) {
       timer += 10;
       if (timer > timeout) {
+#ifdef PN532DEBUG
         PN532DEBUGPRINT.println("TIMEOUT!");
+#endif
         return false;
       }
     }
