@@ -161,7 +161,7 @@ class Adafruit_PN532{
   void begin(void);
 
   // Generic PN532 functions
-  bool     SAMConfig(void);
+  bool     SAMConfig(uint8_t multiplier);
   uint32_t getFirmwareVersion();
   bool     sendCommandCheckAck(uint8_t *cmd, uint8_t cmdlen, uint16_t timeout = 1000);
   bool     writeGPIO(uint8_t pinstate);

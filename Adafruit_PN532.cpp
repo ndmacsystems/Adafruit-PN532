@@ -500,10 +500,10 @@ uint8_t Adafruit_PN532::readGPIO(void) {
     @brief  Configures the SAM (Secure Access Module)
 */
 /**************************************************************************/
-bool Adafruit_PN532::SAMConfig(void) {
+bool Adafruit_PN532::SAMConfig(uint8_t multiplier) {
   pn532_packetbuffer[0] = PN532_COMMAND_SAMCONFIGURATION;
   pn532_packetbuffer[1] = 0x01; // normal mode;
-  pn532_packetbuffer[2] = 0x14; // timeout 50ms * 20 = 1 second
+  pn532_packetbuffer[2] = multiplier; // timeout 50ms * 20 = 1 second
   pn532_packetbuffer[3] = 0x01; // use IRQ pin!
 
   if (! sendCommandCheckAck(pn532_packetbuffer, 4))
